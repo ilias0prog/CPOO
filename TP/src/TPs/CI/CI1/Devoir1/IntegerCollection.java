@@ -1,4 +1,4 @@
-package TPs.CI;
+package TPs.CI.CI1.Decoir1;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -22,18 +22,15 @@ public class IntegerCollection {
     }
 
     /**
-     * returns : index of the first occurence of i in this
-     * throws : MissingIntegerException if i is not in this ( #{x ∈ this| x = i} = 0 )
+     * throws MissingIntegerException if i is not in this ( #{x ∈ this| x = i} = 0 )
+     * returns index of the first occurence of i in this otherwise
      */
-    public int searchInt(Integer i){
-        return liste.indexOf(i);
-        /* Cette implémentation actuelle retourne -1 si l'élément est manquant.
-         * Todo Modifiez l'implémentation afin de retourner soit l'index de i soit MissingIntegerException.
-         */
+    public int searchInt(Integer i) {
         int r = this.indexOf(i);
         if (r == -1){
-            throw new MissingIntegerException();
+            throw new MissingIntegerException("IntegerCollection.searchInt()");
         }
+        return r;
     }
 
     // Pas besoin de spécifier expliqué en cours théorique
@@ -64,5 +61,9 @@ public class IntegerCollection {
         /* Todo Capturez l'exception lancée lors de l'appel à exceptionGenerator et lancez une nouvelle exception
          * non-vérifiée MonExceptionAMoiException.
          */
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Hello World");
     }
 }
