@@ -1,23 +1,31 @@
-package TPs.CI;
-
+import MesExceptions.*;
 
 public class CI1 {
 
     /*
      * A ne pas spécifier
      */
-    public static void main(String [] args){
+    public static void main(String [] args) throws MissingIntegerException{
         IntegerCollection ic = new IntegerCollection(); // crée une nouvelle collection d'Integer
         System.out.println(ic); // affiche la collection
 
         for(int i = 1; i <= 10; i++)
         {
-            Integer elementAleatoire =  TPs.AbsProcedurale.Num.randomInt(11); // Entier entre 0 et 10
+            Integer elementAleatoire =  TPs.AbsProceduraleCorrection.Num.randomInt(11); // Entier entre 0 et 10
             System.out.println("Element aléatoire généré : " + elementAleatoire);
-            System.out.println("Position de l'élément : " + ic.searchInt(elementAleatoire)); // Une fois les
-            // modifications souhaitées dans IntegerCollection, le programme ne s'exécute pas correctement
+            try {System.out.println("Position de l'élément : " + ic.searchInt(elementAleatoire)); // Une fois les
+            // modifications souhaitées dans IntegerCollection, le programme ne s'exécute pas correctement}
         }
-        ic.captureEtRelance(); // Le programme ne s'exécute pas correctement !
+            catch(MissingIntegerException e){
+                System.out.println("MissingIntegerException capturée");
+        }
+    }
+        
+        try {ic.captureEtRelance();}
+        catch (MonExceptionAMoiException e) {
+            System.out.println("MonExceptionAMoiException capturée");
+        }
+         // Le programme ne s'exécute pas correctement !
 
         /* En lisant la sortie dans le terminal vous comprenez que des exceptions empêchent le programme
          * de s'exécuter correctement.

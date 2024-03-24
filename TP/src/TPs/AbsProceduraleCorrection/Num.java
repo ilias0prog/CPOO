@@ -1,10 +1,13 @@
-package TPs.AbsProcedurale;
+package TPs.AbsProceduraleCorrection;
+
+import java.util.Random;
 
 /**
  * @Overview classe mettant à disposition différents outils pour valeurs entières
  */
 public class Num
 {
+    private static final Random random=new Random();
     /*
      * @requires (PRE) condition
      * @modifies les éléments modifiés (POST)
@@ -123,5 +126,12 @@ public class Num
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    /**
+     * @return a random int value between O and x
+     */
+    public static int randomInt(int x){
+        return random.nextInt(x+1);
     }
 }

@@ -1,8 +1,8 @@
-package Excepetions;
+package MesExceptions;
 
 public class MonExceptionAMoiException extends RuntimeException {
     public MonExceptionAMoiException() {
         super(); }
-    public MonExceptionAMoiException(String s) {
-        super(s); }
+    public MonExceptionAMoiException(String message) {
+        super(message); }
 }

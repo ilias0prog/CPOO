@@ -1,8 +1,7 @@
-package TPs.CI.CI1.Decoir1;
 
 import java.util.List;
 import java.util.ArrayList;
-import MesExceptions
+import MesExceptions.*;
 
 public class IntegerCollection {
 
@@ -22,13 +21,13 @@ public class IntegerCollection {
     }
 
     /**
-     * throws MissingIntegerException if i is not in this ( #{x ∈ this| x = i} = 0 )
-     * returns index of the first occurence of i in this otherwise
+     * @returns index of the first occurence of i in liste 
+     * @throws MissingIntegerException if i is not in liste ( #{x ∈ liste| x = i} = 0 )
      */
-    public int searchInt(Integer i) {
-        int r = this.indexOf(i);
+    public int searchInt(Integer i) throws MissingIntegerException {
+        int r = liste.indexOf(i);
         if (r == -1){
-            throw new MissingIntegerException("IntegerCollection.searchInt()");
+            throw new MissingIntegerException("Missing value : " + i +  " in IntegerCollection.searchInt()");
         }
         return r;
     }
@@ -40,27 +39,37 @@ public class IntegerCollection {
     }
 
     /**
-     * ToDo
+     * @throws NullPointerException
      */
     private void exceptionGenerator(){
         throw new NullPointerException();
         /*
          * Pourquoi l'appel à cette méthode exceptionGenerator ne pose pas de souci au compilateur?
-         * Réponse : ToDo
+         * Réponse : Il s'agit d'une exception non-vérifiée (héritée de RunTimeException)
+         *      --> Elle n'est donc pas vérifiée par le compilateur lors de l'exécution du programme
          * Il semblerait que ce soit voulu et didactique! ToDo Effectuez les spécifications en suivant les recommendations
          * vues aux cours de CPOO.
+         * 
+         * 
          */
-
+        
     }
 
     /**
-     * ToDo
+     * @requires exceptionGenerator only throws NullPointerException
+     * @throws MonExceptionAMoiException if a NullPointerException is caught
      */
     public void captureEtRelance(){
-        exceptionGenerator();
         /* Todo Capturez l'exception lancée lors de l'appel à exceptionGenerator et lancez une nouvelle exception
          * non-vérifiée MonExceptionAMoiException.
-         */
+         * */
+
+        try {
+            exceptionGenerator();
+        } 
+        catch (NullPointerException e){
+            throw new MonExceptionAMoiException();
+        }
     }
 
     public static void main(String[] args) {
