@@ -1,4 +1,5 @@
 import MesExceptions.*;
+import MyCI2.IntegerCollection;
 
 public class CI1 {
 
