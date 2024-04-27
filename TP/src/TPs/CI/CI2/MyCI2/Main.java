@@ -28,7 +28,7 @@ public class Main {
         System.out.println("Itération 2");
 
         Iterator<Integer> reverseIterator = ic.IntegerCollectionReverseIterator();
-        while(forwardIterator.hasNext()){
+        while(reverseIterator.hasNext()){
             System.out.println(reverseIterator.next());
         }
 

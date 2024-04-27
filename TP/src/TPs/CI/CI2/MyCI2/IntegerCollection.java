@@ -6,15 +6,24 @@ import java.util.NoSuchElementException;
 import java.util.Iterator;
 
 /**
- * @Overview IntegerCollection représente une collection d'entier,  trié par ordre insertion.
+ * @Overview IntegerCollection représente une collection d'entier, trié par ordre insertion.
  * Il est mutable
  * De manière générale, un IntSet est défini comme [x1, xi,...,xn]
  * avec 0 < i <= n et n = cardinalité de IntegerCollection
  * ex: {3,5,18,5,59,23}; 3 est le premier élément rentré dans IntegerCollection, 23 le plus récent
+ * @invariant size toujours positif
  */
 public class IntegerCollection implements Iterable<Integer>{
 
     private List<Integer> liste;
+
+    /**
+   * FA(c) : { c.liste[i].intValue | 0 <= i < c.liste.size() }
+   */
+
+  /**
+   * IR(c) : c.liste is not null && for all integer i, c.liste[i] is an Integer  (c.liste contains only Integers elements )
+   */
 
     /**
      * @effects crée une nouvelle IntegerCollection vide
@@ -25,7 +34,7 @@ public class IntegerCollection implements Iterable<Integer>{
 
     /**
      * @modifies this
-     * @effects ajoute une occurence de i à this
+     * @effects ajoute une occurrence de i à this
      */
     public void add(int i){
         liste.add(i);
@@ -33,7 +42,7 @@ public class IntegerCollection implements Iterable<Integer>{
 
     /**
      * @modifies this
-     * @effects retire une (et une seule) occurence de i à this
+     * @effects retire une (et une seule) occurrence de i à this
      */
     public void remove(int i){
         liste.remove((Integer) i);
@@ -73,62 +82,63 @@ public class IntegerCollection implements Iterable<Integer>{
         }
     }
 
+    /**
+     * @return un générateur qui parcourt les éléments de la collection dans l'ordre d'insertion
+     */
+    public Iterator<Integer> IntegerCollectionIterator() {
+        return new IntegerCollectionGenerator(true);
+    }
 
     /**
-    * @return un générateur qui parcourt les éléments de la collection dans l'ordre inverse d'insertion
-    */
-    public Iterator<Integer> IntegerCollectionIterator() {
-			return new IntegerCollectionGenerator(true);
-	}
+     * @return un générateur qui parcourt les éléments de la collection dans l'ordre inverse d'insertion
+     */
+    public Iterator<Integer> IntegerCollectionReverseIterator() {
+        return new IntegerCollectionGenerator(false);
+    }
 
-	public Iterator<Integer> IntegerCollectionReverseIterator() {
-			return new IntegerCollectionGenerator(false);
-	}
+    /**
+     * Inner class implémentant l'itérateur pour parcourir la collection dans l'ordre ou l'ordre inverse d'insertion
+     */
+    class IntegerCollectionGenerator implements Iterator<Integer> {
+        private int currentIndex;
+        private final boolean forward;
 
-	public Iterator<Integer> ForEachIterator() {
-		return new IntegerCollectionGenerator(false);
-}
+        public IntegerCollectionGenerator(boolean forward) {
+            this.forward = forward;
+            if (forward) {
+                currentIndex = 0;
+            } else {
+                currentIndex = liste.size() - 1;
+            }
+        }
 
-	class IntegerCollectionGenerator implements Iterator<Integer> {
-			private int currentIndex;
-			private final boolean forward;
+        @Override
 
-			public IntegerCollectionGenerator(boolean forward) {
-					this.forward = forward;
-					if (forward) {
-							currentIndex = 0;
-					} else {
-							currentIndex = liste.size() - 1;
-					}
-			}
+        public boolean hasNext() {
+            if (forward) {
+                return currentIndex < liste.size();
+            } else {
+                return currentIndex >= 0;
+            }
+        }
 
-			@Override
-			public boolean hasNext() {
-					if (forward) {
-							return currentIndex < liste.size();
-					} else {
-							return currentIndex >= 0;
-					}
-			}
+        @Override
+        public Integer next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException("No more elements");
+            }
+            Integer currentElement = liste.get(currentIndex);
+            if (forward) {
+                currentIndex++;
+            } else {
+                currentIndex--;
+            }
+            return currentElement;
+        }
+    }
 
-			@Override
-			public Integer next() {
-					if (!hasNext()) {
-							throw new NoSuchElementException("No more elements");
-					}
-					Integer currentElement = liste.get(currentIndex);
-					if (forward) {
-							currentIndex++;
-					} else {
-							currentIndex--;
-					}
-					return currentElement;
-			}
-	}
-
-	@Override
-	public Iterator<Integer> iterator() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'iterator'");
-	}
+    @Override
+    public Iterator<Integer> iterator() {
+        return liste.iterator();
+    }
 }
